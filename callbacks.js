@@ -31,13 +31,19 @@ function handleResponse(filename, data) {
   if (!responses[filename]) {
     responses[filename] = data;
   }
-  if(responses['file1']){
-    Object.entries(responses).some(({ key, val }) => {
-        if (val) {
-          console.log(val);
-          responses[key] = false;
+  if (responses["file1"] !== undefined) {
+    ["file1", "file2", "file3"].some((filename) => {
+      if (filename in responses) {
+        if (responses[filename]) {
+          console.log(responses[filename]);
+          //mark it false so that we don't print it again
+          responses[filename] = false;
         }
-      });
+      } else {
+        //below statement will break out of the some()
+        return true;
+      }
+    });
   }
 }
 
